@@ -18,50 +18,59 @@ function divide (...a){
     return numbers.reduce((initialValue, a) => initialValue / a);
 }
 
-function operate(num1, num2, operator){
-    let string = operator.toString();
-    switch (string){
+function operate(operator, ...nums){
+    switch (operator){
         case "+":
-            return add(num1, num2);
+            return add(...nums);
+            break;
         case "-":
-            return subtract(num1, num2);
+            return subtract(...nums);
+            break;
         case "*":
-            return multiply(num1, num2);
+            return multiply(...nums)
+            break;
         case "/":
-            return divide(num1, num2);
+            return divide(...nums);
+            break;
         default: 
-        return alert ('enter operator(+, -, /, *) wrapped in quotation marks');
+
     }
 };
 
-let display = document.getElementById('calculator-display');
-let buttons = document.getElementsByClassName('button');
-let numbers = document.querySelectorAll('[data-number]').forEach(number =>{
-    number.addEventListener('click', function(){
-        console.log(number.textContent);
-        display.textContent += number.textContent;
-    })
-})
-
-let operator = document.querySelectorAll('[data-operator]').forEach(operator =>{
-    operator.addEventListener('click', function(){
-        console.log(operator.textContent);
-        display.textContent += operator.textContent;
-    })
-});
-
-let clear = document.querySelectorAll('[data-clear]').forEach(clear => {
-    clear.addEventListener('click', function(){
-        display.textContent = '';
-    });
-});
-
-let remove = document.querySelector('[data-delete]');
-remove.addEventListener('click', function (){
-    display.textContent = display.textContent.slice(0, -1);
-})
-
-let answer = document.querySelector('[data-operate]');
-answer.addEventListener('click', function (){
+class Calculator {
+    constructor (previousOperand, currentOperand) {
+        this.previousOperand = previousOperand;
+        this.currentOperand = currentOperand;
+        this.clear();
+    }
     
+    clear() {
+    this.currentOperand = '';
+    this.previousOperand = '';
+    this.operation = undefined;
+    }
+
+    applyNumber(number) {
+        this.currentOperand = this.currentOperand.toString() + number.toString();
+    }
+
+    displayUpdate() {
+        this.currentOperand.innerText = this.currentOperand;
+    }
+}
+
+const numberButtons = document.querySelectorAll('[data-number]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const equal = document.querySelector('[data-operate]');
+const allClear = document.querySelector('[data-clear]');
+const currentOperand = document.querySelector('[data-current]');
+const previousOperand = document.querySelector('[data-previous]');
+
+const calculator = new Calculator (previousOperand, currentOperand);
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.applyNumber(button.innerText);
+        calculator.displayUpdate();
+    })
 })
+
