@@ -62,6 +62,15 @@ button {
     margin: 0;
 }
 
+#number {
+    background-color: whitesmoke;
+}
+
+#number:hover {
+    background-color: rgb(184, 183, 183);
+    transition: 0.3s; 
+}
+
 #clear {
     background-color: darkorange;
     color: white;
@@ -72,14 +81,15 @@ button {
 
 #clear:hover {opacity: 1;}
 
-#arithmetic {
+#arithmetic, [data-operate] {
     background-color: skyblue;
     opacity: 0.6;
     color: black;
     transition: 0.3s;
 }
 
-#arithmetic:hover {opacity: 1;}
+#arithmetic:hover, [data-operate]:hover {opacity: 1;}
+
 
 .span {
     grid-column: span 3;
